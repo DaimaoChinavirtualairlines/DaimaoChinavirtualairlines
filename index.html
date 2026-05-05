@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-TW" __gchrome_remoteframetoken="2dc80a5d4cabbdd33f09459b40c7cc10"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中華虛擬航空 China Virtual Airlines</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #002D62; /* 穩重深藍 */
+            --white: #ffffff;
+            --light-pink: #FEEFF1; /* 致敬梅花的淡粉紅 */
+            --accent-pink: #E60044; /* 梅花紅點綴 */
+            --text-dark: #333333;
+            --text-light: #666666;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-weight: 300;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            z-index: 1000;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 60px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav.scrolled .logo-text {
+            color: var(--primary-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--text-dark);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-pink) !important;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('https://api.kuse.ai/api/folder/v1/file/e935091f2da59c899882cbd96f6eb5bf25ba3353e641a8dbee1a966da2a1c9ea_4759334.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.8s;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 1.1s;
+            position: relative;
+            z-index: 20;
+        }
+
+        .btn {
+            padding: 12px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 1px solid var(--white);
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            z-index: 30;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary-blue);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* --- About Section --- */
+        section {
+            padding: 100px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        /* --- Catering Section --- */
+        .catering {
+            background-color: var(--light-pink);
+        }
+
+        .catering-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .catering-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .catering-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .catering-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .catering-info {
+            padding: 20px;
+        }
+
+        .catering-info h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        /* --- Platform Section --- */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .platform-card {
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .platform-card h3 { margin-bottom: 15px; }
+
+        .aerofly { border-top: 5px solid #3498db; }
+        .project { border-top: 5px solid #2ecc71; }
+        .ptfs { border-top: 5px solid #e74c3c; }
+
+        /* --- Map --- */
+        .map-section {
+            background: var(--primary-blue);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .map-img {
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Plane Decoration --- */
+        .plane-deco {
+            position: absolute;
+            font-size: 2rem;
+            animation: flyAcross 15s linear infinite;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes flyAcross {
+            from { left: -100px; top: 20%; }
+            to { left: 110%; top: 30%; }
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 60px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .footer-links {
+            text-align: right;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-content { grid-template-columns: 1fr; }
+            .platforms-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar" style="" class="">
+        <div class="logo-container">
+            <img src="https://api.kuse.ai/api/file/public-assets/9684011/access/ea27c15e2a2b710c63bbb50d5b34fad643784786c8dba1a28bbd5237fce5443f" alt="Logo" class="logo-img" style="width: 233.1875px; left: -39px; position: relative; height: 72px; outline: currentcolor;">
+            <span class="logo-text">中華虛擬航空 China Virtual Airlines</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">首頁</a></li>
+            <li><a href="#">關於我們</a></li>
+            <li><a href="#">機隊介紹</a></li>
+            <li><a href="#">航線網絡</a></li>
+            <li><a href="#">模擬平台</a></li>
+            <li><a href="#" style=""><br></a></li>
+        </ul>
+    </nav>
+
+    <div class="plane-deco">✈️</div>
+
+    <section class="hero" style="background-repeat: no-repeat; background-image: url(&quot;https://api.kuse.ai/api/file/public-assets/9684010/access/f3577a350e4095b4fee9ca24ba58a04301a17fc3e82dc624156f8309edbb061c&quot;); outline: currentcolor;">
+        <h1 style="color: rgb(32, 32, 32);">Fly Beyond Reality</h1>
+        <p style="color: rgb(32, 32, 32); font-weight: bold;">翱翔於虛擬，連結真實<br>中華虛擬航空致力於在 Aerofly FS / Project Flight / PTFS 提供最真實的飛行體驗</p>
+        <div class="btn-group">
+            
+            <a href="https://discord.gg/vfgj3skU7q" target="_blank" class="btn btn-secondary" style="">加入我們</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-title">
+            <h2>關於我們</h2>
+            <p>傳承專業，探索無限天空</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>中華虛擬航空（China Virtual Airlines）是一個專注於飛行模擬的虛擬航空品牌，致力於重現真實航空公司的運作模式。</p>
+                <p>我們在多個平台提供服務，包括 Aerofly FS, Project Flight 與 PTFS。透過真實航班編號、模擬標準飛行流程，讓每一位飛行愛好者都能體驗專業的航空運作。</p>
+            </div>
+            <div class="about-features">
+                <ul style="list-style: none; line-height: 2.5; color: var(--primary-blue);">
+                    <li>✈️ 真實航班編號系統</li>
+                    <li>🛫 完整模擬飛行流程（登機至抵達）</li>
+                    <li>👥 活躍的玩家社群與合作飛行</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="catering">
+        <div class="section-title">
+            <h2>雲端饗宴</h2>
+            <p>在萬米高空，也能享受精緻餐飲體驗</p>
+        </div>
+        <div class="catering-grid">
+            <div class="catering-card">
+                <img src="https://api.kuse.ai/api/folder/v1/file/2730e697a7bc910ae042c946e1c94588c669c9e33bc9d1f0f68942081073b4b9_4759243.jpeg" alt="中式" class="catering-img">
+                <div class="catering-info">
+                    <h3>🍱 中式餐點</h3>
+                    <p>滷肉飯 / 雞腿飯（台味滿滿）</p>
+                </div>
+            </div>
+            <div class="catering-card">
+                <img src="https://api.kuse.ai/api/folder/v1/file/7a30b1a6ec8758c7cbb034346413dec8007086d324f7f501df09df41d5149774_4759222.jpeg" alt="西式" class="catering-img">
+                <div class="catering-info">
+                    <h3>🍝 西式餐點</h3>
+                    <p>義大利麵 / 頂級牛排</p>
+                </div>
+            </div>
+            <div class="catering-card">
+                <img src="https://api.kuse.ai/api/folder/v1/file/bacc40e8ec13f29f92ef7614df207a42b9b37d7b9e75e0cbf815fa6103fe6511_4759238.jpeg" alt="飲品" class="catering-img">
+                <div class="catering-info">
+                    <h3>🥤 飲品點心</h3>
+                    <p>特調咖啡 / 精緻手工蛋糕</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <div class="section-title">
+            <h2 style="color: white;">航線網絡</h2>
+            <p style="color: rgba(255,255,255,0.7);">以台北為核心，連結全球虛擬天空</p>
+        </div>
+        
+    </section>
+
+    <section id="platforms">
+        <div class="section-title">
+            <h2>模擬平台專區</h2>
+            <p>選擇您的飛行舞台</p>
+        </div>
+        <div class="platforms-grid">
+            <div class="platform-card aerofly">
+                <h3>🟦 Aerofly FS</h3>
+                <p>高畫質細節<br>真實飛行物理模擬</p>
+            </div>
+            <div class="platform-card project">
+                <h3>🟩 Project Flight</h3>
+                <p>全球社群飛行<br>流暢的多人互動體驗</p>
+            </div>
+            <div class="platform-card ptfs">
+                <h3>🟥 PTFS (Roblox)</h3>
+                <p>輕鬆上手<br>豐富有趣的虛擬玩法</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <footer>
+        <div class="footer-logo">
+            <img src="https://api.kuse.ai/api/file/public-assets/9684012/access/6d1c38a29ea8f6d77a997217ad3f32e8e9246776a1c43f2114886c526445cc57" alt="Logo" style="height: 70px; width: 205.328125px; outline: currentcolor;">
+            <span>中華虛擬航空 China Virtual Airlines</span>
+        </div>
+        <div class="footer-links">
+            <p style="">聯絡我們:&nbsp;<a href="https://discord.gg/vfgj3skU7q">https://discord.gg/vfgj3skU7q&nbsp;</a>l</p>
+            <p>© 2026 China Virtual Airlines. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+
+
+</body></html>
